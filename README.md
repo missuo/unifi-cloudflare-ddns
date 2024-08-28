@@ -10,12 +10,31 @@ If you want to deploy using Cloudflare Workers, I highly recommend checking out 
 
 ## Usage
 
-### Docker Compose
+### Deploy API Service (Choose one of the following three methods)
+
+#### Docker Compose (Recommended)
 
 ```bash
 mkdir unifi-cloudflare-ddns && cd unifi-cloudflare-ddns
 wget -O compose.yaml https://github.com/missuo/unifi-cloudflare-ddns/raw/main/compose.yaml
 docker compose up -d
+```
+
+#### Docker
+
+```bash
+docker run -d --name unifi-cloudflare-ddns -p 9909:9909 missuo/unifi-cloudflare-ddns
+```
+#### Binary
+
+The example uses the screen command to run the binary in the background.
+
+```bash
+apt install wget screen -y
+wget -O unifi-cloudflare-ddns https://github.com/missuo/unifi-cloudflare-ddns/raw/main/unifi-cloudflare-ddns
+chmod +x unifi-cloudflare-ddns
+screen -S unifi-cloudflare-ddns
+./unifi-cloudflare-ddns
 ```
 
 ### Get the Token from Cloudflare
