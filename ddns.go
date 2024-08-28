@@ -1,18 +1,7 @@
-/*
- * @Author: Vincent Yang
- * @Date: 2024-08-28 14:46:32
- * @LastEditors: Vincent Yang
- * @LastEditTime: 2024-08-28 15:15:52
- * @FilePath: /unifi-cloudflare-ddns/ddns.go
- * @Telegram: https://t.me/missuo
- * @GitHub: https://github.com/missuo
- *
- * Copyright © 2024 by Vincent, All Rights Reserved.
- */
-
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -126,8 +115,40 @@ func (cf *Cloudflare) updateDNS(hostname, ip string) (map[string]interface{}, er
 	return result, err
 }
 
+func parseBasicAuth(c *gin.Context) (string, bool) {
+	auth := c.GetHeader("Authorization")
+	if auth == "" {
+		return "", false
+	}
+
+	const prefix = "Basic "
+	if !strings.HasPrefix(auth, prefix) {
+		return "", false
+	}
+
+	payload, err := base64.StdEncoding.DecodeString(auth[len(prefix):])
+	if err != nil {
+		return "", false
+	}
+
+	pair := strings.SplitN(string(payload), ":", 2)
+	if len(pair) != 2 {
+		return "", false
+	}
+
+	return pair[1], true // Return the password as the token
+}
+
 func handleUpdate(c *gin.Context) {
-	token := c.Query("token")
+	var token string
+	var ok bool
+
+	// Try to get token from Basic Auth first
+	if token, ok = parseBasicAuth(c); !ok {
+		// If not found in Basic Auth, try query parameter
+		token = c.Query("token")
+	}
+
 	if token == "" {
 		c.JSON(http.StatusBadRequest, APIResponse{
 			Success: false,
@@ -155,13 +176,12 @@ func handleUpdate(c *gin.Context) {
 	if err != nil {
 		statusCode := http.StatusInternalServerError
 		if result != nil {
-			// If we have a result, it's likely a Cloudflare API error response
 			statusCode = http.StatusBadRequest
 		}
 		c.JSON(statusCode, APIResponse{
 			Success: false,
 			Message: "Update failed",
-			Error:   result, // This will contain the full Cloudflare API error response
+			Error:   result,
 		})
 		return
 	}
