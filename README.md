@@ -64,7 +64,6 @@ screen -S unifi-cloudflare-ddns
      - Remove `https://` from the URL.
 
 
+## License
 
-
-
-
+[MIT](./LICENSE)
