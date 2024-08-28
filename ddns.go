@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -193,7 +194,9 @@ func handleUpdate(c *gin.Context) {
 }
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
+	r.Use(cors.Default())
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Hello, World! \nhttps://github.com/missuo/unifi-cloudflare-ddns")
 	})
