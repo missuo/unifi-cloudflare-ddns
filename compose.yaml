@@ -1,0 +1,7 @@
+services:
+  unifi-cloudflare-ddns:
+    container_name: unifi-cloudflare-ddns
+    image: ghcr.io/missuo/unifi-cloudflare-ddns:latest
+    restart: always
+    ports:
+      - "9909:9909"
