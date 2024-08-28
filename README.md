@@ -20,7 +20,7 @@ docker compose up -d
 
 ### Get the Token from Cloudflare
 
-![Cloudflare API Token](./screenshot/cloudflare-api-token.png)
+![Cloudflare API Token](./screenshot/cloudflare-token.png)
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
 2. Go to **API Tokens** -> **Create Token**
