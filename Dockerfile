@@ -1,9 +1,9 @@
-FROM golang:1.22 AS builder
+FROM golang:1.23 AS builder
 WORKDIR /go/src/github.com/missuo/unifi-cloudflare-ddns
 COPY go.mod ./
 COPY go.sum ./
 COPY ddns.go ./
-RUN go mod download
+RUN go get -d -v ./
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o unifi-cloudflare-ddns .
 
 FROM alpine:latest
