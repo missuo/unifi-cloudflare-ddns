@@ -2,7 +2,7 @@
  * @Author: Vincent Yang
  * @Date: 2024-08-28 14:46:32
  * @LastEditors: Vincent Yang
- * @LastEditTime: 2024-08-28 15:04:54
+ * @LastEditTime: 2024-08-28 15:15:52
  * @FilePath: /unifi-cloudflare-ddns/ddns.go
  * @Telegram: https://t.me/missuo
  * @GitHub: https://github.com/missuo
@@ -174,6 +174,9 @@ func handleUpdate(c *gin.Context) {
 
 func main() {
 	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Hello, World! \nhttps://github.com/missuo/unifi-cloudflare-ddns")
+	})
 	r.GET("/update", handleUpdate)
 	r.Run(":9909")
 }

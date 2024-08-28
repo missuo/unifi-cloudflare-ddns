@@ -3,7 +3,7 @@ WORKDIR /go/src/github.com/missuo/unifi-cloudflare-ddns
 COPY go.mod ./
 COPY go.sum ./
 COPY ddns.go ./
-RUN go get -d -v ./
+RUN go mod download
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o unifi-cloudflare-ddns .
 
 FROM alpine:latest
