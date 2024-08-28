@@ -63,6 +63,9 @@ screen -S unifi-cloudflare-ddns
      - For older UniFi devices, omit the URL path.
      - Remove `https://` from the URL.
 
+## Special Thanks
+
+- [willswire/unifi-ddns](https://github.com/willswire/unifi-ddns)
 
 ## License
 
