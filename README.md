@@ -31,7 +31,7 @@ The example uses the screen command to run the binary in the background.
 
 ```bash
 apt install wget screen -y
-wget -O unifi-cloudflare-ddns https://github.com/missuo/unifi-cloudflare-ddns/raw/main/unifi-cloudflare-ddns
+wget -O unifi-cloudflare-ddns https://github.com/missuo/unifi-cloudflare-ddns/releases/download/v1.0.3/unifi-cloudflare-ddns-linux-amd64
 chmod +x unifi-cloudflare-ddns
 screen -S unifi-cloudflare-ddns
 ./unifi-cloudflare-ddns
